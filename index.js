@@ -2,6 +2,11 @@ const { default: axios } = require("axios");
 const express = require("express");
 const app = express();
 
+const PORT = process.env.PORT || 3001;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.get("/:url", async (req, res) => {
   try {
     const response = await axios.get(req.params.url);
@@ -33,4 +38,8 @@ app.delete("/:url", async (req, res) => {
   } catch (err) {
     res.json({ error: err });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`API server running on port ${PORT}!`);
 });
